@@ -135,21 +135,37 @@
         return false;
     }
 
-    public void PrintLoansRemainingMonths(string fiscalCode)
+    public List<string> CalcLoansRemainingMonths(string fiscalCode)
     {
         Customer customer = this.FindCustomer(fiscalCode);
 
         List<Loan> customerLoans = this.FindLoans(fiscalCode);
 
-        List<int> remainingMonth = new List<int>();
+        List<string> remainingMonth = new List<string>();
 
         foreach(Loan loan in customerLoans)
         {
             TimeSpan timesSpan = loan.EndDate - DateTime.Now;
 
-            remainingMonth.Add(Convert.ToInt16(timesSpan.Days / 30));
+            remainingMonth.Add($"al prestito del: {loan.StartDate}, mancano {Convert.ToInt16(timesSpan.Days / 30)} rate");
         }
 
         return remainingMonth;
+    }
+
+    public void PrintLoans()
+    {
+        foreach(Customer customer in Customers)
+        {
+            Console.WriteLine(customer.ToString());
+        }
+    }
+
+    public void PrintCustomers()
+    {
+        foreach (Loan loan in Loans)
+        {
+            Console.WriteLine(loan.ToString());
+        }
     }
 }

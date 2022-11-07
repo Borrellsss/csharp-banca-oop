@@ -16,4 +16,9 @@
         this.StartDate = DateTime.Now;
         this.EndDate = endDate;
     }
+
+    public override string ToString()
+    {
+        return $"prestito {id}: codice fiscale: {this.Customer.FiscalCode} | totale: {this.Amount} euro | inizio prestito: {this.StartDate} - fine prestito: {this.EndDate}";
+    }
 }

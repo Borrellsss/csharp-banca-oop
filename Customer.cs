@@ -12,4 +12,9 @@
         this.FiscalCode = fiscalCode;
         this.Salary = salary;
     }
+
+    public override string ToString()
+    {
+        return $"nome e cognome: {this.Name} {this.LastName} | codice fiscale: {this.FiscalCode} | stipendio: {this.Salary} euro";
+    }
 }
