@@ -34,65 +34,367 @@
 
 Bank bankTest = new Bank("BankTest");
 
+bool runProgram = true;
 
-//test aggiunta utente
-if (bankTest.AddCustomer("Mario", "Rossi", "DDDRRF86L05H501D", 300))
+while(runProgram)
 {
-    Console.WriteLine("Utente aggiunto con successo!");
+    Console.WriteLine("Quale operazione vuoi eseguire?");
+    Console.WriteLine("[1]: aggiungi utente.");
+    Console.WriteLine("[2]: ricerca utente.");
+    Console.WriteLine("[3]: modifica utente.");
+    Console.WriteLine("[4]: aggiungi prestito.");
+    Console.WriteLine("[5]: ricerca prestito.");
+    Console.WriteLine("[6]: mostra tutti i clienti.");
+    Console.WriteLine("[7]: mostra tutti i prestiti.");
+
+    string userChoice = Console.ReadLine();
+
+    if(userChoice == "1")
+    {
+        Console.WriteLine("Inserisci i dati dell'utente.");
+
+        Console.Write("Nome: ");
+        string userName = Console.ReadLine();
+
+        Console.Write("Cognome: ");
+        string userLastName = Console.ReadLine();
+
+        Console.Write("Codice Fiscale: ");
+        string userFiscalCode = Console.ReadLine();
+
+        Console.Write("Stipendio: ");
+        double userSalary = Convert.ToDouble(Console.ReadLine());
+
+        bool addCustomerConfirm = bankTest.AddCustomer(userName, userLastName, userFiscalCode, userSalary);
+
+        if (addCustomerConfirm)
+        {
+            Console.WriteLine("Utente aggiunto con successo!");
+        }
+        else
+        {
+            Console.WriteLine("Errore: impossibile aggiungere utente!");
+        }
+
+        bool firtsWhileCon = true;
+
+        while(firtsWhileCon)
+        {
+            Console.WriteLine("Desideri fare altro?");
+            Console.WriteLine("[1]: sì.");
+            Console.WriteLine("[2]: no.");
+
+            string ProgramContinue = Console.ReadLine();
+
+            if (ProgramContinue == "1")
+            {
+                firtsWhileCon = false;
+            }
+            else if (ProgramContinue == "2")
+            {
+                Console.WriteLine("Grazie, buona giornata!");
+                runProgram = false;
+                firtsWhileCon = false;
+            }
+            else
+            {
+                Console.WriteLine("Mi spiace ma non ho capito.");
+            }
+        }
+    }
+    else if(userChoice == "2")
+    {
+        Console.WriteLine("Inserisci i dati dell'utente.");
+
+        Console.Write("Codice Fiscale: ");
+        string userFiscalCode = Console.ReadLine();
+
+        Customer customerFound = bankTest.FindCustomer(userFiscalCode);
+
+        if (customerFound != null)
+        {
+            Console.WriteLine("Utente trovato!");
+        }
+        else
+        {
+            Console.WriteLine("Nessun utente trovato!");
+            Console.WriteLine("Potrebbe non essere registrato o potrebbe essere stato inserito un codice fiscale errato.");
+        }
+
+        bool firtsWhileCon = true;
+
+        while (firtsWhileCon)
+        {
+            Console.WriteLine("Desideri fare altro?");
+            Console.WriteLine("[1]: sì.");
+            Console.WriteLine("[2]: no.");
+
+            string ProgramContinue = Console.ReadLine();
+
+            if (ProgramContinue == "1")
+            {
+                firtsWhileCon = false;
+            }
+            else if (ProgramContinue == "2")
+            {
+                Console.WriteLine("Grazie, buona giornata!");
+                runProgram = false;
+                firtsWhileCon = false;
+            }
+            else
+            {
+                Console.WriteLine("Mi spiace ma non ho capito.");
+            }
+        }
+    }
+    else if (userChoice == "3")
+    {
+        Console.WriteLine("Inserisci il codice fiscale dell'utente da modificare.");
+
+        Console.Write("Codice Fiscale: ");
+        string userFiscalCode = Console.ReadLine();
+
+        Customer customerFound = bankTest.FindCustomer(userFiscalCode);
+
+        if (customerFound != null)
+        {
+            Console.WriteLine("Inserisci i nuovi dati.");
+
+            Console.Write("Nome: ");
+            string newUserName = Console.ReadLine();
+
+            Console.Write("Cognome: ");
+            string unewUerLastName = Console.ReadLine();
+
+            Console.Write("Codice Fiscale: ");
+            string newUserFiscalCode = Console.ReadLine();
+
+            Console.Write("Stipendio: ");
+            double newUserSalary = Convert.ToDouble(Console.ReadLine());
+
+            bool modifyCustomerConfirm = bankTest.ModifyCustomer(customerFound, newUserName, unewUerLastName, newUserFiscalCode, newUserSalary);
+
+            if (modifyCustomerConfirm)
+            {
+                Console.WriteLine("Utente modificato con successo!");
+            }
+            else
+            {
+                Console.WriteLine("Errore: impossibile modificare utente!");
+                Console.WriteLine("Potrebbe non essere registrato o potrebbe essere stato inserito un codice fiscale errato.");
+            }
+        }
+        else
+        {
+            Console.WriteLine("Nessun utente trovato!");
+            Console.WriteLine("Potrebbe non essere registrato o potrebbe essere stato inserito un codice fiscale errato.");
+        }
+
+        bool firtsWhileCon = true;
+
+        while (firtsWhileCon)
+        {
+            Console.WriteLine("Desideri fare altro?");
+            Console.WriteLine("[1]: sì.");
+            Console.WriteLine("[2]: no.");
+
+            string ProgramContinue = Console.ReadLine();
+
+            if (ProgramContinue == "1")
+            {
+                firtsWhileCon = false;
+            }
+            else if (ProgramContinue == "2")
+            {
+                Console.WriteLine("Grazie, buona giornata!");
+                runProgram = false;
+                firtsWhileCon = false;
+            }
+            else
+            {
+                Console.WriteLine("Mi spiace ma non ho capito.");
+            }
+        }
+    }
+    else if (userChoice == "4")
+    {
+        Console.WriteLine("Inserisci il tuo codice fiscale");
+
+        Console.Write("Codice Fiscale: ");
+        string userFiscalCode = Console.ReadLine();
+
+        Customer customerFound = bankTest.FindCustomer(userFiscalCode);
+
+        if(customerFound != null)
+        {
+            Console.WriteLine("Di che cifra hai bisogno?");
+
+            Console.Write("Ammontare prestito: ");
+            double loanAmount = Convert.ToDouble(Console.ReadLine());
+
+            Console.WriteLine("Entro quando vuoi ripagare il prestito?");
+
+            Console.Write("Giorno: ");
+            int day = Convert.ToInt16(Console.ReadLine());
+
+            Console.Write("Mese: ");
+            int month = Convert.ToInt16(Console.ReadLine());
+
+            Console.Write("Anno: ");
+            int year = Convert.ToInt16(Console.ReadLine());
+
+            DateTime endDate = new DateTime(year, month, day);
+
+            if (bankTest.AddLoan(customerFound, loanAmount, endDate))
+            {
+                Console.WriteLine("prestito accettato!");
+            }
+            else
+            {
+                Console.WriteLine("prestito rifiutato.");
+            }
+        }
+        else
+        {
+            Console.WriteLine("Non è registrato alcun utente con questo codice fiscale!");
+        }
+
+        bool firtsWhileCon = true;
+
+        while (firtsWhileCon)
+        {
+            Console.WriteLine("Desideri fare altro?");
+            Console.WriteLine("[1]: sì.");
+            Console.WriteLine("[2]: no.");
+
+            string ProgramContinue = Console.ReadLine();
+
+            if (ProgramContinue == "1")
+            {
+                firtsWhileCon = false;
+            }
+            else if (ProgramContinue == "2")
+            {
+                Console.WriteLine("Grazie, buona giornata!");
+                runProgram = false;
+                firtsWhileCon = false;
+            }
+            else
+            {
+                Console.WriteLine("Mi spiace ma non ho capito.");
+            }
+        }
+    }
+    else if (userChoice == "5")
+    {
+        Console.WriteLine("Inserisci il tuo codice fiscale");
+
+        Console.Write("Codice Fiscale: ");
+        string userFiscalCode = Console.ReadLine();
+
+        Customer customerFound = bankTest.FindCustomer(userFiscalCode);
+
+        List<Loan> customerLoans = bankTest.FindLoans(customerFound.FiscalCode);
+
+        if (customerLoans.Count() > 0)
+        {
+            Console.WriteLine("sono presenti prestiti per questo utente");
+        }
+        else
+        {
+            Console.WriteLine("Errore: nessun prestito trovato per questo utente");
+        }
+
+        bool firtsWhileCon = true;
+
+        while (firtsWhileCon)
+        {
+            Console.WriteLine("Desideri fare altro?");
+            Console.WriteLine("[1]: sì.");
+            Console.WriteLine("[2]: no.");
+
+            string ProgramContinue = Console.ReadLine();
+
+            if (ProgramContinue == "1")
+            {
+                firtsWhileCon = false;
+            }
+            else if (ProgramContinue == "2")
+            {
+                Console.WriteLine("Grazie, buona giornata!");
+                runProgram = false;
+                firtsWhileCon = false;
+            }
+            else
+            {
+                Console.WriteLine("Mi spiace ma non ho capito.");
+            }
+        }
+    }
+    else if (userChoice == "6")
+    {
+        Console.WriteLine("Lista clienti registrati: ");
+        bankTest.PrintAllCustomers();
+
+        bool firtsWhileCon = true;
+
+        while (firtsWhileCon)
+        {
+            Console.WriteLine("Desideri fare altro?");
+            Console.WriteLine("[1]: sì.");
+            Console.WriteLine("[2]: no.");
+
+            string ProgramContinue = Console.ReadLine();
+
+            if (ProgramContinue == "1")
+            {
+                firtsWhileCon = false;
+            }
+            else if (ProgramContinue == "2")
+            {
+                Console.WriteLine("Grazie, buona giornata!");
+                runProgram = false;
+                firtsWhileCon = false;
+            }
+            else
+            {
+                Console.WriteLine("Mi spiace ma non ho capito.");
+            }
+        }
+    }
+    else if (userChoice == "7")
+    {
+        Console.WriteLine("Lista prestiti concessi: ");
+        bankTest.PrintAllLoans();
+
+        bool firtsWhileCon = true;
+
+        while (firtsWhileCon)
+        {
+            Console.WriteLine("Desideri fare altro?");
+            Console.WriteLine("[1]: sì.");
+            Console.WriteLine("[2]: no.");
+
+            string ProgramContinue = Console.ReadLine();
+
+            if (ProgramContinue == "1")
+            {
+                firtsWhileCon = false;
+            }
+            else if (ProgramContinue == "2")
+            {
+                Console.WriteLine("Grazie, buona giornata!");
+                runProgram = false;
+                firtsWhileCon = false;
+            }
+            else
+            {
+                Console.WriteLine("Mi spiace ma non ho capito.");
+            }
+        }
+    }
+    else
+    {
+        Console.WriteLine("Mi spiace ma non ho capito.");
+    }
 }
-else
-{
-    Console.WriteLine("Errore: impossibile aggiungere utente!");
-}
-
-//test ricerca utente
-//if (bankTest.FindCustomer("DDDRRF86L05H501D") != null)
-//{
-//    Console.WriteLine("Utente trovato!");
-//}
-//else
-//{
-//    Console.WriteLine("Nessun utente trovato!");
-//}
-
-//test modifica utente
-//if (bankTest.ModifyCustomer("Mario", "Bianchi", "DDDRRF86L05H501D", 1350))
-//{
-//    Console.WriteLine("Utente modificato con successo!");
-//    Customer modifiedCustomer = bankTest.FindCustomer("DDDRRF86L05H501D");
-//    Console.WriteLine($"nome: {modifiedCustomer.Name}");
-//    Console.WriteLine($"cognome: {modifiedCustomer.LastName}");
-//    Console.WriteLine($"codice fiscale: {modifiedCustomer.FiscalCode}");
-//    Console.WriteLine($"stipendio: {modifiedCustomer.Salary} euro");
-//}
-//else
-//{
-//    Console.WriteLine("nessun utente trovato!");
-//}
-
-//test aggiunta prestito
-Customer customer = bankTest.FindCustomer("DDDRRF86L05H501D");
-DateTime endDate = new DateTime(2023, 01, 23);
-
-if(bankTest.AddLoan(customer, 1000, endDate))
-{
-    Console.WriteLine("prestito accettato");
-}
-else
-{
-    Console.WriteLine("prestito rifiutato");
-}
-
-
-
-//test ricerca prestito
-//List<Loan> customerLoans = bankTest.FindLoans("DDDRRF86L05H501D");
-
-//if(customerLoans.Count() > 0)
-//{
-//    Console.WriteLine("sono presenti prestiti per questo utente");
-//}
-//else
-//{
-//    Console.WriteLine("Errore: nessun prestito trovato per questo utente");
-//}

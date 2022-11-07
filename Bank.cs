@@ -48,9 +48,9 @@
         return false;
     }
 
-    public bool ModifyCustomer(string name, string lastName, string fiscalCode, double salary)
+    public bool ModifyCustomer(Customer customer, string name, string lastName, string fiscalCode, double salary)
     {
-        Customer customerToModify = this.FindCustomer(fiscalCode);
+        Customer customerToModify = this.FindCustomer(customer.FiscalCode);
 
         if (customerToModify != null)
         {
@@ -64,7 +64,12 @@
                 customerToModify.LastName = lastName;
             }
 
-            if((salary < 0) && salary != customerToModify.Salary)
+            if ((fiscalCode != null || fiscalCode != "") && fiscalCode != customerToModify.FiscalCode)
+            {
+                customerToModify.FiscalCode = fiscalCode;
+            }
+
+            if ((salary < 0) && salary != customerToModify.Salary)
             {
                 customerToModify.Salary = salary;
             }
@@ -135,37 +140,33 @@
         return false;
     }
 
-    public List<string> CalcLoansRemainingMonths(string fiscalCode)
+    public void PrintAllCustomers()
     {
-        Customer customer = this.FindCustomer(fiscalCode);
-
-        List<Loan> customerLoans = this.FindLoans(fiscalCode);
-
-        List<string> remainingMonth = new List<string>();
-
-        foreach(Loan loan in customerLoans)
+        if(Customers.Count() > 0)
         {
-            TimeSpan timesSpan = loan.EndDate - DateTime.Now;
-
-            remainingMonth.Add($"al prestito del: {loan.StartDate}, mancano {Convert.ToInt16(timesSpan.Days / 30)} rate");
+            foreach (Customer customer in Customers)
+            {
+                Console.WriteLine(customer.ToString());
+            }
         }
-
-        return remainingMonth;
-    }
-
-    public void PrintLoans()
-    {
-        foreach(Customer customer in Customers)
+        else
         {
-            Console.WriteLine(customer.ToString());
+            Console.WriteLine("Nessun utente presente nel DataBase!");
         }
     }
 
-    public void PrintCustomers()
+    public void PrintAllLoans()
     {
-        foreach (Loan loan in Loans)
+        if (Loans.Count() > 0)
         {
-            Console.WriteLine(loan.ToString());
+            foreach (Loan loan in Loans)
+            {
+                Console.WriteLine(loan.ToString());
+            }
+        }
+        else
+        {
+            Console.WriteLine("Nessun prestito presente nel DataBase!");
         }
     }
 }
